@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: middle-service-config
+data:
+  back-service-url: "http://back-service-svc.default.svc.cluster.local/back-entry"
+  springAppName: middle-service
+---
+apiVersion: apps/v1 # need to be 'apps/v1', only 'v1' will fail
+kind: Deployment
+metadata:
+  name: middle-service-deployment
+  labels:
+    app: middle-service
+spec:
+  selector:
+    matchLabels:
+      app: middle-service
+  template:
+    metadata:
+      labels:
+        app: middle-service
+    spec:
+      containers:
+      - name: middle-service-container
+        image: asia.gcr.io/aiot-vn-loancloud-dev/middle-service:0.1.0
+        ports:
+        - containerPort: 8080
+          name: http-web-svc
+        envFrom:
+        - configMapRef:
+            name: middle-service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: middle-service-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: middle-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http-web-svc

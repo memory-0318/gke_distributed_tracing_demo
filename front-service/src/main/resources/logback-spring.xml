@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <contextName>front-service</contextName>
+
+    <!-- ref.: https://spring-gcp.saturnism.me/app-dev/observability/logging#log-trace-correlation -->
+<!--    <include resource="org/springframework/boot/logging/logback/defaults.xml" />-->
+<!--    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
+
+    <include resource="com/google/cloud/spring/logging/logback-json-appender.xml" />
+    <root level="INFO">
+        <appender-ref ref="CONSOLE_JSON"/>
+    </root>
+<!--    <springProfile name="qa | staging | prod">-->
+<!--        <include resource="org/springframework/cloud/gcp/logging/logback-json-appender.xml"/>-->
+<!--        <root level="INFO">-->
+<!--            <appender-ref ref="CONSOLE_JSON"/>-->
+<!--        </root>-->
+<!--    </springProfile>-->
+<!--    <springProfile name="default | dev">-->
+<!--        <root level="INFO">-->
+<!--            <appender-ref ref="CONSOLE"/>-->
+<!--        </root>-->
+<!--    </springProfile>-->
+
+<!--    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+<!--            <providers class="net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders">-->
+<!--                <pattern>-->
+<!--                    <pattern>-->
+<!--                        {-->
+<!--                        "timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}",-->
+<!--                        "level": "%level",-->
+<!--                        "application": "${springAppName:-}",-->
+<!--                        "traceId": "%X{traceId:-}",-->
+<!--                        "spanId": "%X{spanId:-}",-->
+<!--                        "pid": "${PID:-}",-->
+<!--                        "thread": "%thread",-->
+<!--                        "class": "%logger{40}",-->
+<!--                        "message": "%message"-->
+<!--                        }-->
+<!--                    </pattern>-->
+<!--                </pattern>-->
+<!--            </providers>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <root additivity="false" level="INFO">-->
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--    </root>-->
+</configuration>

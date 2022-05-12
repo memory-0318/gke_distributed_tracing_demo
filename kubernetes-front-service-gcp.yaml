@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: front-service-config
+data:
+  middle-service-url: "http://middle-service-svc.default.svc.cluster.local/middle-entry"
+  springAppName: front-service
+---
+apiVersion: apps/v1 # need to be 'apps/v1', only 'v1' will fail
+kind: Deployment
+metadata:
+  name: front-service-deployment
+  labels:
+    app: front-service
+spec:
+  selector:
+    matchLabels:
+      app: front-service
+  template:
+    metadata:
+      labels:
+        app: front-service
+    spec:
+      containers:
+      - name: front-service-container
+        image: asia.gcr.io/aiot-vn-loancloud-dev/front-service:0.3.0
+        ports:
+        - containerPort: 8080
+          name: http-web-svc
+        envFrom:
+        - configMapRef:
+            name: front-service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-service-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: front-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http-web-svc
