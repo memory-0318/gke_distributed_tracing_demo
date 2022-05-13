@@ -28,7 +28,7 @@
   ```
 - Access api via `https://<external ip of front service>/front-entry`
   - in this example: `https://34.80.176.214/front-entry`
-- Go to GCP Operations Logging to see the logs ![](/image/cloud operations logging.png)
+- Go to GCP Operations Logging to see the logs ![](/image/cloud_operations_logging.png)
 ---
 # Others
 - If you want to compile the project in the local machine, you need to obtain default GCP Application Default Credentials via `gcloud auth application-default login`
