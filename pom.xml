@@ -17,6 +17,7 @@
 
         <spring.boot.version>2.6.6</spring.boot.version>
         <spring.cloud.gcp.starter.version>3.2.1</spring.cloud.gcp.starter.version>
+        <jib.maven.version>3.2.1</jib.maven.version>
 
         <logback.logback-classic.version>1.2.11</logback.logback-classic.version>
 
@@ -153,6 +154,22 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <!-- Defines plugins that are used in the modules. -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib.maven.version}</version>
+                    <configuration>
+                        <from>
+                            <image>openjdk:8-jre</image>
+                        </from>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <modules>
